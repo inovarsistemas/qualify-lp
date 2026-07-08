@@ -1,19 +1,27 @@
-import { Button } from "@/components/ui/button"
+import { CTASection } from "@/components/marketing/cta-section"
+import { Features } from "@/components/marketing/features"
+import { Hero } from "@/components/marketing/hero"
+import { HowItWorks } from "@/components/marketing/how-it-works"
+import { Pricing } from "@/components/marketing/pricing"
+import { SiteFooter } from "@/components/marketing/site-footer"
+import { SiteHeader } from "@/components/marketing/site-header"
 
 export default function Page() {
   return (
-    <div className="flex min-h-svh p-6">
-      <div className="flex max-w-md min-w-0 flex-col gap-4 text-sm leading-loose">
-        <div>
-          <h1 className="font-medium">Project ready!</h1>
-          <p>You may now add components and start building.</p>
-          <p>We&apos;ve already added the button component for you.</p>
-          <Button className="mt-2">Button</Button>
-        </div>
-        <div className="font-mono text-xs text-muted-foreground">
-          (Press <kbd>d</kbd> to toggle dark mode)
-        </div>
-      </div>
+    <div
+      className="min-h-svh bg-black text-white"
+      style={{
+        backgroundImage:
+          "radial-gradient(1100px 620px at 78% -8%, rgba(244,68,26,0.12), transparent 60%), radial-gradient(900px 500px at 0% 30%, rgba(251,92,36,0.06), transparent 60%)",
+      }}
+    >
+      <SiteHeader />
+      <Hero />
+      <HowItWorks />
+      <Features />
+      <Pricing />
+      <CTASection />
+      <SiteFooter />
     </div>
   )
 }

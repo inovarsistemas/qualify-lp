@@ -130,3 +130,118 @@
     @apply font-sans;
     }
 }
+
+/* ============================================================
+   QualifyLeads brand tokens
+   Dark-first brand (no light variant): near-black canvas, white
+   ink, and a signature orange→red "flame" gradient. Scoped as
+   plain custom properties (not mapped into shadcn's --background
+   etc.) so the marketing page can own its look independently.
+   ============================================================ */
+:root {
+  --ql-brand-flame:   #FB5C24;
+  --ql-brand-orange:  #FF7A33;
+  --ql-brand-ember:   #F4441A;
+  --ql-brand-red:     #EE2C1A;
+  --ql-brand-crimson: #B31D14;
+
+  --ql-gradient:       linear-gradient(120deg, #FF7A33 0%, #F4441A 52%, #C31A12 100%);
+  --ql-gradient-soft:  linear-gradient(120deg, #FF8A45 0%, #F5511F 100%);
+  --ql-gradient-text:  linear-gradient(90deg,  #FFA24D 0%, #FB5C24 38%, #EE2C1A 70%, #9E1810 100%);
+
+  --ql-black:   #000000;
+  --ql-ink-950: #080808;
+  --ql-ink-900: #101010;
+  --ql-ink-850: #161616;
+  --ql-ink-800: #1E1E1E;
+  --ql-ink-750: #262626;
+  --ql-ink-700: #2E2E2E;
+  --ql-ink-600: #3A3A3A;
+  --ql-ink-500: #555555;
+  --ql-ink-400: #7A7A7A;
+  --ql-field:   #0D0D0D;
+
+  --ql-white:        #FFFFFF;
+  --ql-text-primary: #FFFFFF;
+  --ql-text-body:    rgba(255,255,255,0.82);
+  --ql-text-muted:   rgba(255,255,255,0.60);
+  --ql-text-subtle:  rgba(255,255,255,0.40);
+  --ql-text-faint:   rgba(255,255,255,0.24);
+  --ql-on-brand:     #FFFFFF;
+
+  --ql-success: #35C08A;
+  --ql-warning: #F0A73B;
+  --ql-danger:  #F0473B;
+  --ql-info:    #5B9BFF;
+
+  --ql-surface-canvas:  var(--ql-black);
+  --ql-surface-raised:  var(--ql-ink-900);
+  --ql-surface-card:    var(--ql-ink-850);
+  --ql-surface-input:   var(--ql-field);
+  --ql-surface-overlay: rgba(0,0,0,0.72);
+
+  --ql-border-hairline: rgba(255,255,255,0.08);
+  --ql-border-subtle:   rgba(255,255,255,0.12);
+  --ql-border-strong:   rgba(255,255,255,0.20);
+  --ql-border-brand:    rgba(251,92,36,0.55);
+
+  --ql-flame-wash-08: rgba(251,92,36,0.08);
+  --ql-flame-wash-14: rgba(251,92,36,0.14);
+  --ql-flame-wash-24: rgba(251,92,36,0.24);
+
+  /* Radius */
+  --ql-radius-xs:   6px;
+  --ql-radius-sm:   10px;
+  --ql-radius-md:   14px;
+  --ql-radius-lg:   18px;
+  --ql-radius-xl:   24px;
+  --ql-radius-2xl:  30px;
+  --ql-radius-3xl:  40px;
+  --ql-radius-pill: 999px;
+
+  /* Elevation */
+  --ql-shadow-xs: 0 1px 2px rgba(0,0,0,0.40);
+  --ql-shadow-sm: 0 2px 8px rgba(0,0,0,0.45);
+  --ql-shadow-md: 0 8px 24px rgba(0,0,0,0.50);
+  --ql-shadow-lg: 0 18px 48px rgba(0,0,0,0.58);
+  --ql-shadow-xl: 0 32px 80px rgba(0,0,0,0.65);
+  --ql-ring-inset: inset 0 0 0 1px rgba(255,255,255,0.06);
+  --ql-glow-brand:      0 10px 34px rgba(244,68,26,0.38);
+  --ql-glow-brand-soft: 0 6px 22px rgba(251,92,36,0.28);
+  --ql-focus-ring:      0 0 0 3px rgba(251,92,36,0.45);
+
+  /* Motion */
+  --ql-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --ql-ease-out:      cubic-bezier(0.16, 1, 0.3, 1);
+  --ql-dur-fast: 120ms;
+  --ql-dur-base: 200ms;
+
+  /* Type */
+  --ql-font-display: var(--font-sans);
+  --ql-font-mono:    var(--font-mono);
+  --ql-fs-display-2xl: 76px;
+  --ql-fs-display-xl:  60px;
+  --ql-fs-display-lg:  48px;
+  --ql-fs-display-md:  38px;
+  --ql-fs-h1: 32px;
+  --ql-fs-h2: 26px;
+  --ql-fs-h3: 21px;
+  --ql-fs-h4: 18px;
+  --ql-fs-body-lg: 17px;
+  --ql-fs-body:    15px;
+  --ql-fs-sm:      13.5px;
+  --ql-fs-xs:      12px;
+  --ql-fs-2xs:     10.5px;
+  --ql-ls-tighter: -0.03em;
+  --ql-ls-tight:   -0.015em;
+  --ql-ls-eyebrow:  0.22em;
+
+  /* Spacing */
+  --ql-container-lg: 1200px;
+  --ql-container-xl: 1360px;
+}
+
+::selection {
+  background: rgba(251, 92, 36, 0.35);
+  color: #fff;
+}
