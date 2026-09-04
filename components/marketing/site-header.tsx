@@ -12,7 +12,6 @@ export function SiteHeader() {
         <nav className="hidden items-center gap-8 md:flex">
           <NavLink href="#como">Como funciona</NavLink>
           <NavLink href="#recursos">Recursos</NavLink>
-          <NavLink href="#precos">Preços</NavLink>
         </nav>
         <Button asChild size="sm">
           <a href="#cta">
