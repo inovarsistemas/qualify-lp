@@ -1,18 +1,69 @@
 "use client"
 
 import * as React from "react"
+import { zodResolver } from "@hookform/resolvers/zod"
 import { ArrowRight, Check } from "lucide-react"
+import { useForm } from "react-hook-form"
 
 import { Logo } from "@/components/brand/logo"
 import { Button } from "@/components/marketing/button"
 import { Input } from "@/components/marketing/input"
+import {
+  buildLeadPayload,
+  leadFormSchema,
+  type LeadFormValues,
+} from "@/lib/lead-schema"
+import { formatBrazilPhone } from "@/lib/phone"
+
+const defaultValues: LeadFormValues = {
+  nome: "",
+  sobrenome: "",
+  email: "",
+  empresa: "",
+  telefone: "",
+  website: "",
+}
 
 export function CTASection() {
   const [sent, setSent] = React.useState(false)
+  const [submitError, setSubmitError] = React.useState<string | null>(null)
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-    setSent(true)
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors, isSubmitting },
+  } = useForm<LeadFormValues>({
+    resolver: zodResolver(leadFormSchema),
+    defaultValues,
+  })
+
+  async function onSubmit(values: LeadFormValues) {
+    setSubmitError(null)
+
+    if (values.website && values.website.trim().length > 0) {
+      setSent(true)
+      return
+    }
+
+    const payload = buildLeadPayload(values)
+
+    try {
+      const response = await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ website: values.website ?? "", data: payload }),
+      })
+
+      if (!response.ok) {
+        setSubmitError("Não foi possível enviar. Tente novamente.")
+        return
+      }
+
+      setSent(true)
+    } catch {
+      setSubmitError("Não foi possível enviar. Tente novamente.")
+    }
   }
 
   return (
@@ -31,27 +82,113 @@ export function CTASection() {
           comece a fechar.
         </h2>
         <p className="mx-auto mt-[18px] max-w-[460px] text-base leading-[1.6] text-[var(--ql-text-muted)]">
-          Deixe seus dados e receba uma demonstração do agente de IA no seu
-          funil.
+          Deixe seus dados e receba uma demonstração do agente de SDR IA.
         </p>
 
         {!sent ? (
-          <form onSubmit={handleSubmit} className="mx-auto mt-8 max-w-[760px] text-left">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="mx-auto mt-8 max-w-[760px] text-left"
+            noValidate
+          >
+            <input
+              type="text"
+              tabIndex={-1}
+              autoComplete="off"
+              aria-hidden="true"
+              className="pointer-events-none absolute -left-[9999px] h-px w-px opacity-0"
+              {...register("website")}
+            />
             <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2">
-              <Input name="nome" placeholder="Nome" required />
-              <Input name="sobrenome" placeholder="Sobrenome" required />
-              <Input name="email" type="email" placeholder="E-mail corporativo" required />
-              <Input name="empresa" placeholder="Nome da empresa" required />
-              <Input
-                name="telefone"
-                type="tel"
-                placeholder="Telefone"
-                required
-                className="sm:col-span-2"
-              />
+              <div>
+                <Input
+                  placeholder="Nome"
+                  disabled={isSubmitting}
+                  invalid={Boolean(errors.nome)}
+                  {...register("nome")}
+                />
+                {errors.nome ? (
+                  <p className="mt-1.5 text-xs text-[var(--ql-danger)]">
+                    {errors.nome.message}
+                  </p>
+                ) : null}
+              </div>
+              <div>
+                <Input
+                  placeholder="Sobrenome"
+                  disabled={isSubmitting}
+                  invalid={Boolean(errors.sobrenome)}
+                  {...register("sobrenome")}
+                />
+                {errors.sobrenome ? (
+                  <p className="mt-1.5 text-xs text-[var(--ql-danger)]">
+                    {errors.sobrenome.message}
+                  </p>
+                ) : null}
+              </div>
+              <div>
+                <Input
+                  type="email"
+                  placeholder="E-mail corporativo"
+                  disabled={isSubmitting}
+                  invalid={Boolean(errors.email)}
+                  {...register("email")}
+                />
+                {errors.email ? (
+                  <p className="mt-1.5 text-xs text-[var(--ql-danger)]">
+                    {errors.email.message}
+                  </p>
+                ) : null}
+              </div>
+              <div>
+                <Input
+                  placeholder="Nome da empresa"
+                  disabled={isSubmitting}
+                  invalid={Boolean(errors.empresa)}
+                  {...register("empresa")}
+                />
+                {errors.empresa ? (
+                  <p className="mt-1.5 text-xs text-[var(--ql-danger)]">
+                    {errors.empresa.message}
+                  </p>
+                ) : null}
+              </div>
+              <div className="sm:col-span-2">
+                <Input
+                  type="tel"
+                  placeholder="Telefone"
+                  disabled={isSubmitting}
+                  invalid={Boolean(errors.telefone)}
+                  {...register("telefone", {
+                    onChange: (event) => {
+                      setValue(
+                        "telefone",
+                        formatBrazilPhone(event.target.value),
+                        { shouldValidate: false }
+                      )
+                    },
+                  })}
+                />
+                {errors.telefone ? (
+                  <p className="mt-1.5 text-xs text-[var(--ql-danger)]">
+                    {errors.telefone.message}
+                  </p>
+                ) : null}
+              </div>
             </div>
-            <Button type="submit" block size="lg" className="mt-4">
-              Quero uma demonstração <ArrowRight className="size-4" />
+            {submitError ? (
+              <p className="mt-4 text-center text-sm text-[var(--ql-danger)]">
+                {submitError}
+              </p>
+            ) : null}
+            <Button type="submit" block size="lg" className="mt-4" disabled={isSubmitting}>
+              {isSubmitting ? (
+                "Enviando..."
+              ) : (
+                <>
+                  Quero uma demonstração <ArrowRight className="size-4" />
+                </>
+              )}
             </Button>
             <p className="mt-3 text-center text-xs text-[var(--ql-text-faint)]">
               Sem spam. Seus dados são usados apenas para contato comercial.
