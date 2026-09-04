@@ -13,8 +13,8 @@
 ## Handoff
 
 **Feature:** lead-integration
-**Branch:** (current)
-**Phase:** Execute complete — pending Verifier validation report
-**Done:** API route, form wiring, pricing removal, deps, .env.example; build/typecheck/lint pass
-**Next:** Verifier sub-agent → validation.md
+**Branch:** main
+**Phase:** Complete — Verifier PASS (`7c88df6..c53d9e4`)
+**Done:** 4 commits; build/typecheck/lint pass; validation.md written
+**Next:** Deploy with `LEADS_API_URL` + `LEADS_API_KEY`; manual smoke test against stage API
 **Blockers:** none

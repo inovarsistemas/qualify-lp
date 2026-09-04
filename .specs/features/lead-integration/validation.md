@@ -13,6 +13,8 @@
 
 ---
 
+## Quality Gates
+
 | Gate | Result | Notes |
 | ---- | ------ | ----- |
 | `npm run typecheck` | PASS | Exit 0 |
