@@ -1,0 +1,17 @@
+services:
+  web:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    networks:
+      - proxy-traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.qualify-lp.entrypoints=websecure"
+      - "traefik.http.routers.qualify-lp.rule=Host(`${APP_DOMAIN:?defina APP_DOMAIN no .env}`)"
+      - "traefik.http.routers.qualify-lp.tls.certresolver=letsencrypt"
+      - "traefik.http.services.qualify-lp.loadbalancer.server.port=3000"
+
+networks:
+  proxy-traefik:
+    external: true
